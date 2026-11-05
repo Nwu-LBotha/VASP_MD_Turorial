@@ -1,1 +1,71 @@
+# Tutorial: Introduction to ab-initio molecular dynamics using VASP
+
+## Official documentation and website 
+https://vasp.at/tutorials/latest/md/part1/
+
+This tutorial introduces **ab-initio molecular dynamics (AIMD)** using silicon as an example. It covers three exercises:
+
+1. Simulating solid silicon at high temperature.
+2. Following the melting process using the pair-correlation function.
+3. Monitoring changes in the geometry of a silicon structure.
+
+The aim is to understand the basic concepts, prepare the input files, run the calculations and examine the results.
+
+## 1. Solid cubic-diamond silicon
+
+### 1.1 Learning objectives
+
+By the end of this section, you should be able to:
+
+* Explain what ab-initio molecular dynamics is.
+* Read a crystal structure from a CIF file using `pymatgen`.
+* Create a supercell and write a VASP POSCAR file.
+* Distinguish between `vasp_gam` and `vasp_std`.
+* Plot energies and atomic structures using `py4vasp`.
+
+### 1.2 Task
+
+Perform an ab-initio molecular dynamics simulation of cubic-diamond silicon containing 64 atoms. Run the simulation for 90 fs at 2000 K using the canonical (NVT) ensemble and the Nosé–Hoover thermostat.
+
+### 1.3 What is molecular dynamics?
+
+**Molecular dynamics (MD)** is a computer simulation method used to study how atoms or molecules move over time.
+
+Atoms are treated as particles with positions, velocities and masses. Their movement is calculated using Newton's second law:
+
+$$
+F=ma
+$$
+
+where:
+
+* \(F\) is the force acting on an atom.
+* \(m\) is the mass of the atom.
+* \(a\) is its acceleration.
+
+The simulation is divided into small intervals called **time steps**. At each time step, the forces acting on the atoms are calculated and their positions and velocities are updated.
+
+In conventional classical MD, the forces are usually calculated using an empirical potential or force field.
+
+In **ab-initio molecular dynamics (AIMD)**, the forces are calculated using quantum-mechanical methods, commonly density functional theory (DFT). This means that the atomic forces are obtained from an electronic-structure calculation rather than from a predefined classical potential.
+
+Although the forces are calculated quantum mechanically, the atoms themselves follow classical equations of motion.
+
+### 1.4 What is an NVT ensemble?
+
+An **ensemble** describes the thermodynamic conditions under which a simulation is performed.
+
+The NVT ensemble is also called the **canonical ensemble**. It keeps three quantities constant:
+
+* **N – Number of particles:** The number of atoms in the simulation does not change.
+* **V – Volume:** The size of the simulation cell remains fixed.
+* **T – Temperature:** The simulation is performed at a specified temperature, although the instantaneous temperature fluctuates around the target value.
+
+A thermostat is used to control the temperature.
+
+A **thermostat** is a mathematical method that allows the simulation to exchange energy with a virtual heat reservoir. This keeps the system close to the desired temperature.
+
+In this example, we use the **Nosé–Hoover thermostat**. It is a deterministic thermostat, meaning that it modifies the equations of motion using additional variables rather than random forces.
+
+The Nosé–Hoover thermostat is suitable for this example.
 
